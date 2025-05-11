@@ -24,7 +24,7 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
               <span className="absolute top-0 right-0 w-2 h-2 bg-pink-500 rounded-full"></span>
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-80 p-0 rounded-xl">
+          <PopoverContent className="w-80 p-0 rounded-xl mr-8">
             <div className="p-4 border-b border-slate-100">
               <h2 className="text-xl font-semibold text-[#272742]">Notifikasi</h2>
             </div>
@@ -69,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
               <AvatarFallback>MK</AvatarFallback>
             </Avatar>
           </PopoverTrigger>
-          <PopoverContent className="w-60 p-0 rounded-xl">
+          <PopoverContent className="w-60 p-0 rounded-xl mr-8">
             <div className="p-5 border-b border-slate-100">
               <h2 className="text-xl font-semibold text-[#272742]">Mochamad Khopid</h2>
               <p className="text-gray-500">Admin</p>
