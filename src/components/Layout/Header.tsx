@@ -1,13 +1,24 @@
 
 import React, { useState } from 'react';
 import { HeaderProps } from '@/types/dashboard';
-import { Bell, ChevronDown, LogOut, User } from 'lucide-react';
+import { Bell, User, LogOut } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export const Header: React.FC<HeaderProps> = ({ title, description }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const navigate = useNavigate();
+  
+  const handleSignOut = () => {
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("username");
+    toast.success("Signed out successfully");
+    navigate("/signin");
+    setIsProfileOpen(false);
+  };
 
   return (
     <header className="bg-white flex items-center justify-between px-8 py-4 border-b border-slate-100">
@@ -24,7 +35,7 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
               <span className="absolute top-0 right-0 w-2 h-2 bg-pink-500 rounded-full"></span>
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-80 p-0 rounded-xl mr-8">
+          <PopoverContent className="w-80 p-0 rounded-xl mr-16">
             <div className="p-4 border-b border-slate-100">
               <h2 className="text-xl font-semibold text-[#272742]">Notifikasi</h2>
             </div>
@@ -69,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
               <AvatarFallback>MK</AvatarFallback>
             </Avatar>
           </PopoverTrigger>
-          <PopoverContent className="w-60 p-0 rounded-xl mr-8">
+          <PopoverContent className="w-60 p-0 rounded-xl mr-16">
             <div className="p-5 border-b border-slate-100">
               <h2 className="text-xl font-semibold text-[#272742]">Mochamad Khopid</h2>
               <p className="text-gray-500">Admin</p>
@@ -79,7 +90,10 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
                 <User className="w-5 h-5" />
                 <span>Profil Saya</span>
               </button>
-              <button className="w-full flex items-center gap-3 p-4 text-red-500 hover:bg-slate-50 rounded-lg">
+              <button 
+                onClick={handleSignOut}
+                className="w-full flex items-center gap-3 p-4 text-red-500 hover:bg-slate-50 rounded-lg"
+              >
                 <LogOut className="w-5 h-5" />
                 <span>Keluar</span>
               </button>

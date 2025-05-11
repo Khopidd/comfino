@@ -16,7 +16,7 @@ const Index: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col ml-64">
         <Header
           title="Dashboard"
           description="Informasi terperinci tentang keuangan komunitas Anda"

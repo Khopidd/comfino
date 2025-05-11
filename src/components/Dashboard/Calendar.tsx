@@ -1,57 +1,69 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { format, addMonths, subMonths } from "date-fns";
 
 export const Calendar: React.FC = () => {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
+  
+  const nextMonth = () => {
+    setCurrentMonth(addMonths(currentMonth, 1));
+  };
+  
+  const prevMonth = () => {
+    setCurrentMonth(subMonths(currentMonth, 1));
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-[#272742] text-2xl font-medium">Januari 2025</h2>
+        <h2 className="text-[#272742] text-2xl font-medium">
+          {format(currentMonth, 'MMMM yyyy')}
+        </h2>
         <div className="flex items-center gap-2">
-          <button className="p-1 text-gray-400 hover:text-gray-600">
+          <button 
+            className="p-1 text-gray-400 hover:text-gray-600"
+            onClick={prevMonth}
+          >
             <ChevronLeft className="h-6 w-6" />
           </button>
-          <button className="p-1 text-blue-600 hover:text-blue-700">
+          <button 
+            className="p-1 text-blue-600 hover:text-blue-700"
+            onClick={nextMonth}
+          >
             <ChevronRight className="h-6 w-6" />
           </button>
         </div>
       </div>
       
       <div className="border-t border-slate-100 pt-6">
-        <div className="grid grid-cols-7 gap-5 text-center mb-6">
-          {['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].map((day) => (
-            <div key={day} className="text-[#272742] font-medium">
-              {day}
-            </div>
-          ))}
-        </div>
-        
-        <div className="grid grid-cols-7 gap-5 text-center">
-          {[
-            [1, 2, 3, 4, 5, 6, 7],
-            [8, 9, 10, 11, 12, 13, 14],
-            [15, 16, 17, 18, 19, 20, 21],
-            [22, 23, 24, 25, 26, 27, 28],
-            [29, 30, 1, 2, 3, 4, 5]
-          ].map((week, weekIndex) => (
-            <React.Fragment key={weekIndex}>
-              {week.map((day, dayIndex) => (
-                <div
-                  key={`${weekIndex}-${dayIndex}`}
-                  className={`h-10 w-10 flex items-center justify-center rounded-full mx-auto ${
-                    day === 23 
-                      ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-300/30' 
-                      : weekIndex === 4 && dayIndex > 1 
-                        ? 'text-slate-300' 
-                        : 'text-[#272742]'
-                  }`}
-                >
-                  {day}
-                </div>
-              ))}
-            </React.Fragment>
-          ))}
-        </div>
+        <CalendarComponent
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          month={currentMonth}
+          onMonthChange={setCurrentMonth}
+          className="p-0 pointer-events-auto"
+          classNames={{
+            months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+            month: "space-y-4",
+            caption: "hidden", // Hide the default caption since we have our own header
+            caption_label: "text-sm font-medium",
+            nav: "hidden", // Hide default navigation
+            table: "w-full border-collapse space-y-1",
+            head_row: "grid grid-cols-7 gap-5 text-center mb-6",
+            head_cell: "text-[#272742] font-medium",
+            row: "grid grid-cols-7 gap-5 text-center",
+            cell: "h-10 w-10 text-center text-sm p-0 relative",
+            day: "h-10 w-10 flex items-center justify-center rounded-full mx-auto hover:bg-blue-50",
+            day_selected: "bg-blue-600 text-white font-bold shadow-lg shadow-blue-300/30",
+            day_today: "bg-white text-[#272742]",
+            day_outside: "text-slate-300",
+            day_disabled: "text-slate-300"
+          }}
+        />
       </div>
     </div>
   );
