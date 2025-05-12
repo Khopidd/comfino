@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Index from "./pages/Index";
 import Komunitas from "./pages/Komunitas";
+import SimpanUang from "./pages/SimpanUang";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
@@ -62,6 +63,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <Komunitas />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/simpan-uang" 
+              element={
+                <ProtectedRoute>
+                  <SimpanUang />
                 </ProtectedRoute>
               } 
             />
