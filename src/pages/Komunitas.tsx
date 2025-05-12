@@ -64,12 +64,10 @@ const Komunitas: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex">
       {/* Sidebar */}
-      <div className="w-64 flex-shrink-0">
-        <Sidebar />
-      </div>
+      <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col ml-64">
+      <div className="flex-1 flex flex-col pl-64">
         <Header
           title="Komunitas"
           description="Informasi terperinci tentang grup dan akun Anda"

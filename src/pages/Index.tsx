@@ -11,12 +11,10 @@ const Index: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex">
       {/* Sidebar */}
-      <div className="w-64 flex-shrink-0">
-        <Sidebar />
-      </div>
+      <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col ml-64">
+      <div className="flex-1 flex flex-col pl-64">
         <Header
           title="Dashboard"
           description="Informasi terperinci tentang keuangan komunitas Anda"

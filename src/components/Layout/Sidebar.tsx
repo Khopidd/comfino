@@ -8,7 +8,7 @@ export const Sidebar: React.FC = () => {
   const location = useLocation();
 
   return (
-    <nav className="bg-white flex w-64 flex-col items-stretch h-screen pt-8 pb-8 shadow-sm fixed">
+    <nav className="bg-white w-64 flex flex-col h-screen pt-8 pb-8 shadow-sm fixed left-0 top-0 z-10">
       <div className="flex items-center gap-3 px-6">
         <div className="bg-blue-600 rounded-lg w-[33px] h-[33px] flex items-center justify-center">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
