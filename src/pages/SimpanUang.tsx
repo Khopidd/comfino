@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { format } from "date-fns";
-import { CalendarIcon, Wallet } from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { Sidebar } from '@/components/Layout/Sidebar';
 import { Header } from '@/components/Layout/Header';
 import { Button } from '@/components/ui/button';
@@ -97,7 +97,6 @@ const SimpanUang: React.FC = () => {
                       selected={date}
                       onSelect={(date) => date && setDate(date)}
                       initialFocus
-                      className="p-3 pointer-events-auto"
                     />
                   </PopoverContent>
                 </Popover>
