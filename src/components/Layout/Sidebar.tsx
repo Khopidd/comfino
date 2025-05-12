@@ -1,10 +1,11 @@
 
 import React from 'react';
-import { LayoutGrid, Briefcase } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { LayoutGrid, Users } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const Sidebar: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <nav className="bg-white flex w-64 flex-col items-stretch h-screen pt-8 pb-8 shadow-sm fixed">
@@ -20,18 +21,19 @@ export const Sidebar: React.FC = () => {
       <div className="border-b border-gray-100 my-6" />
       
       <div className="flex flex-col space-y-2 px-6">
-        <div className="flex items-center gap-3 py-3 px-4 bg-blue-50 text-blue-600 font-medium rounded-lg">
-          <div className="grid grid-cols-2 gap-0.5">
-            <div className="w-2 h-2 bg-blue-600 rounded-sm"></div>
-            <div className="w-2 h-2 bg-blue-600 rounded-sm"></div>
-            <div className="w-2 h-2 bg-blue-600 rounded-sm"></div>
-            <div className="w-2 h-2 bg-blue-600 rounded-sm"></div>
-          </div>
+        <div 
+          className={`flex items-center gap-3 py-3 px-4 ${location.pathname === '/' ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'} transition-colors rounded-lg font-medium cursor-pointer`}
+          onClick={() => navigate('/')}
+        >
+          <LayoutGrid className="h-5 w-5" />
           Dashboard
         </div>
         
-        <div className="flex items-center gap-3 py-3 px-4 text-gray-500 hover:bg-gray-50 hover:text-gray-700 transition-colors rounded-lg font-medium">
-          <Briefcase className="h-5 w-5" />
+        <div 
+          className={`flex items-center gap-3 py-3 px-4 ${location.pathname === '/komunitas' ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'} transition-colors rounded-lg font-medium cursor-pointer`}
+          onClick={() => navigate('/komunitas')}
+        >
+          <Users className="h-5 w-5" />
           Komunitas
         </div>
       </div>
