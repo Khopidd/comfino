@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Index from "./pages/Index";
 import Komunitas from "./pages/Komunitas";
 import SimpanUang from "./pages/SimpanUang";
+import ProfilePage from "./pages/ProfilePage";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
@@ -71,6 +72,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <SimpanUang />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
                 </ProtectedRoute>
               } 
             />

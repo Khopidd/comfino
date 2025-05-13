@@ -20,6 +20,11 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
     setIsProfileOpen(false);
   };
 
+  const navigateToProfile = () => {
+    navigate("/profile");
+    setIsProfileOpen(false);
+  };
+
   return (
     <header className="bg-white flex items-center justify-between px-8 py-4 border-b border-slate-100">
       <div>
@@ -73,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
           <PopoverTrigger asChild>
             <Avatar className="w-10 h-10 cursor-pointer">
               <AvatarImage 
-                src="https://cdn.builder.io/api/v1/image/assets/a081cd1bc6f9470c93dd0c6e6a2c349a/61e59f0ca95338d78e1ce26e0250055f4b0b1862?placeholderIfAbsent=true"
+                src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
                 className="object-cover"
                 alt="User Avatar" 
               />
@@ -86,7 +91,10 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
               <p className="text-gray-500">Admin</p>
             </div>
             <div className="p-1">
-              <button className="w-full flex items-center gap-3 p-4 text-gray-500 hover:bg-slate-50 rounded-lg">
+              <button 
+                onClick={navigateToProfile}
+                className="w-full flex items-center gap-3 p-4 text-gray-500 hover:bg-slate-50 rounded-lg"
+              >
                 <User className="w-5 h-5" />
                 <span>Profil Saya</span>
               </button>
