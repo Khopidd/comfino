@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Sidebar } from '@/components/Layout/Sidebar';
 import { Header } from '@/components/Layout/Header';
 import { Button } from '@/components/ui/button';
@@ -19,6 +20,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import {
   Sheet,
@@ -96,6 +98,11 @@ const Komunitas: React.FC = () => {
     setAdminDialogOpen(false);
   };
 
+  // Helper function to generate URL-friendly group names
+  const getGroupSlug = (name: string) => {
+    return name.toLowerCase().replace(/\s+/g, '-');
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 flex">
       {/* Sidebar */}
@@ -142,9 +149,11 @@ const Komunitas: React.FC = () => {
                         <p className="text-sm text-gray-500 mb-1">Dibuat: {group.date}</p>
                         <h3 className="font-medium text-xl text-gray-800 mb-1">{group.name}</h3>
                         <p className="font-semibold text-gray-800 text-lg mb-4">{group.amount}</p>
-                        <Button variant="outline" className="w-full text-blue-600 border-blue-200 hover:bg-blue-50">
-                          Lihat Grup
-                        </Button>
+                        <Link to={`/komunitas/${getGroupSlug(group.name)}`}>
+                          <Button variant="outline" className="w-full text-blue-600 border-blue-200 hover:bg-blue-50">
+                            Lihat Grup
+                          </Button>
+                        </Link>
                       </div>
                     </Card>
                   </div>
@@ -211,6 +220,7 @@ const Komunitas: React.FC = () => {
         <DialogContent className="sm:max-w-md bg-white p-0 rounded-lg overflow-hidden">
           <DialogHeader className="p-6 pb-0">
             <DialogTitle className="text-xl font-semibold">Grup Baru</DialogTitle>
+            <DialogDescription className="sr-only">Form untuk membuat grup baru</DialogDescription>
           </DialogHeader>
           
           <div className="p-6">
@@ -289,6 +299,7 @@ const Komunitas: React.FC = () => {
         <DialogContent className="sm:max-w-md bg-white p-0 rounded-lg overflow-hidden">
           <DialogHeader className="p-6 pb-2">
             <DialogTitle className="text-xl font-semibold">Buat Admin</DialogTitle>
+            <DialogDescription className="sr-only">Form untuk membuat akun admin baru</DialogDescription>
           </DialogHeader>
           
           <form onSubmit={handleCreateAdmin} className="p-6 pt-4">

@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Index from "./pages/Index";
 import Komunitas from "./pages/Komunitas";
+import GrupDetail from "./pages/GrupDetail";
 import SimpanUang from "./pages/SimpanUang";
 import ProfilePage from "./pages/ProfilePage";
 import SignIn from "./pages/SignIn";
@@ -64,6 +65,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <Komunitas />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/komunitas/:groupId" 
+              element={
+                <ProtectedRoute>
+                  <GrupDetail />
                 </ProtectedRoute>
               } 
             />
