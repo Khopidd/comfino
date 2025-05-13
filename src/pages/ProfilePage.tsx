@@ -38,43 +38,15 @@ const ProfilePage: React.FC = () => {
         />
 
         <main className="flex-1 p-8">
-          <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8">
-            {/* Profile Card (Left) */}
-            <div className="bg-white rounded-lg p-8 shadow-sm w-full lg:w-1/3">
-              <h2 className="text-xl font-semibold mb-6">Gambar Profil</h2>
-              <div className="flex flex-col items-center">
-                <div className="w-40 h-40 relative mb-4">
-                  <Avatar className="w-full h-full">
-                    <AvatarImage 
-                      src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
-                      className="object-cover"
-                      alt="Profile Picture" 
-                    />
-                    <AvatarFallback>MK</AvatarFallback>
-                  </Avatar>
-                </div>
-                <h3 className="text-xl font-medium">Mochamad Khopid</h3>
-                <p className="text-gray-500 mb-4">Admin</p>
-              </div>
-            </div>
-
-            {/* Edit Profile Form (Right) */}
-            <div className="bg-white rounded-lg p-8 shadow-sm w-full lg:w-2/3">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-blue-600">Edit Profil</h2>
-                <Button variant="outline" className="text-gray-600 border-gray-300">
-                  Ubah Kata Sandi
-                </Button>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Profile Image */}
-                <div className="mb-6">
-                  <Label className="block mb-1 font-medium">
-                    Gambar Profil<span className="text-red-500">*</span>
-                  </Label>
-                  <div className="flex items-center gap-4">
-                    <Avatar className="w-24 h-24">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col space-y-8">
+              {/* Profile Card (Left) */}
+              <div className="bg-white rounded-lg p-8 shadow-sm w-full">
+                <h2 className="text-xl font-semibold mb-6">Gambar Profil</h2>
+                
+                <div className="flex flex-col items-center">
+                  <div className="w-32 h-32 relative mb-4">
+                    <Avatar className="w-full h-full">
                       <AvatarImage 
                         src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
                         className="object-cover"
@@ -82,90 +54,125 @@ const ProfilePage: React.FC = () => {
                       />
                       <AvatarFallback>MK</AvatarFallback>
                     </Avatar>
-                    <div className="flex gap-2">
-                      <Button type="button" variant="outline" className="bg-blue-50 text-blue-600 border-blue-200">
-                        <Upload className="mr-2 h-4 w-4" />
-                        Upload
-                      </Button>
-                      <Button type="button" variant="outline" className="bg-red-50 text-red-600 border-red-200">
-                        <Trash className="mr-2 h-4 w-4" />
-                        Hapus
-                      </Button>
+                  </div>
+                  <h3 className="text-xl font-medium">Mochamad Khopid</h3>
+                  <p className="text-gray-500 mb-4">Admin</p>
+                </div>
+              </div>
+
+              {/* Edit Profile Form (Right) */}
+              <div className="bg-white rounded-lg p-8 shadow-sm w-full">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-semibold text-blue-600">Edit Profil</h2>
+                  <Button variant="outline" className="text-gray-600 border-gray-300">
+                    Ubah Kata Sandi
+                  </Button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Profile Image */}
+                  <div className="mb-6">
+                    <Label className="block mb-1 font-medium">
+                      Gambar Profil<span className="text-red-500">*</span>
+                    </Label>
+                    
+                    <div className="flex mt-4">
+                      <div className="w-32 h-32 relative">
+                        <Avatar className="w-full h-full">
+                          <AvatarImage 
+                            src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7" 
+                            className="object-cover"
+                            alt="Profile Picture" 
+                          />
+                          <AvatarFallback>MK</AvatarFallback>
+                        </Avatar>
+                      </div>
+                      
+                      <div className="flex gap-2 ml-6 self-center">
+                        <Button type="button" variant="outline" className="bg-blue-50 text-blue-600 border-blue-200">
+                          <Upload className="mr-2 h-4 w-4" />
+                          Upload
+                        </Button>
+                        <Button type="button" variant="outline" className="bg-red-50 text-red-600 border-red-200">
+                          <Trash className="mr-2 h-4 w-4" />
+                          Hapus
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Full Name */}
-                <div>
-                  <Label htmlFor="name" className="block mb-1 font-medium">
-                    Nama lengkap
-                  </Label>
-                  <Input 
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full"
-                  />
-                </div>
+                  {/* Full Name */}
+                  <div>
+                    <Label htmlFor="name" className="block mb-1 font-medium">
+                      Nama lengkap
+                    </Label>
+                    <Input 
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
 
-                {/* About */}
-                <div>
-                  <Label htmlFor="about" className="block mb-1 font-medium">
-                    Tentang<span className="text-red-500">*</span>
-                  </Label>
-                  <Textarea 
-                    id="about"
-                    value={about}
-                    onChange={(e) => setAbout(e.target.value)}
-                    className="w-full min-h-[100px]"
-                  />
-                </div>
+                  {/* About */}
+                  <div>
+                    <Label htmlFor="about" className="block mb-1 font-medium">
+                      Tentang<span className="text-red-500">*</span>
+                    </Label>
+                    <Textarea 
+                      id="about"
+                      value={about}
+                      onChange={(e) => setAbout(e.target.value)}
+                      className="w-full min-h-[100px]"
+                    />
+                  </div>
 
-                {/* Email */}
-                <div>
-                  <Label htmlFor="email" className="block mb-1 font-medium">
-                    Email<span className="text-red-500">*</span>
-                  </Label>
-                  <Input 
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full"
-                  />
-                </div>
+                  {/* Email */}
+                  <div>
+                    <Label htmlFor="email" className="block mb-1 font-medium">
+                      Email<span className="text-red-500">*</span>
+                    </Label>
+                    <Input 
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
 
-                {/* Phone */}
-                <div>
-                  <Label htmlFor="phone" className="block mb-1 font-medium">
-                    Telepon<span className="text-red-500">*</span>
-                  </Label>
-                  <Input 
-                    id="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full"
-                  />
-                </div>
+                  {/* Phone */}
+                  <div>
+                    <Label htmlFor="phone" className="block mb-1 font-medium">
+                      Telepon<span className="text-red-500">*</span>
+                    </Label>
+                    <Input 
+                      id="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
 
-                {/* Action Buttons */}
-                <div className="flex justify-end gap-4 pt-4">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    className="px-8 py-6"
-                    onClick={() => navigate('/')}
-                  >
-                    Batal
-                  </Button>
-                  <Button 
-                    type="submit" 
-                    className="bg-blue-600 hover:bg-blue-700 px-8 py-6"
-                  >
-                    Simpan Perubahan
-                  </Button>
-                </div>
-              </form>
+                  {/* Action Buttons */}
+                  <div className="flex justify-end gap-4 pt-4">
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      className="px-8 py-6"
+                      onClick={() => navigate('/')}
+                    >
+                      Batal
+                    </Button>
+                    <Button 
+                      type="submit" 
+                      className="bg-blue-600 hover:bg-blue-700 px-8 py-6"
+                    >
+                      Simpan Perubahan
+                    </Button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </main>

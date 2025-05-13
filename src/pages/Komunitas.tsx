@@ -29,10 +29,13 @@ import {
 } from "@/components/ui/sheet";
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
 
 const Komunitas: React.FC = () => {
   // State for the new group dialog
   const [groupDialogOpen, setGroupDialogOpen] = useState(false);
+  // State for the new admin account dialog
+  const [adminDialogOpen, setAdminDialogOpen] = useState(false);
   
   // Mock data for groups
   const groups = [
@@ -86,6 +89,12 @@ const Komunitas: React.FC = () => {
       role: 'Admin'
     }
   ];
+
+  const handleCreateAdmin = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success('Admin baru berhasil dibuat');
+    setAdminDialogOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
@@ -151,7 +160,10 @@ const Komunitas: React.FC = () => {
                 <h2 className="text-xl font-semibold">Daftar Akun Admin</h2>
                 <p className="text-sm text-gray-500">Lihat semua akun admin di bawah ini</p>
               </div>
-              <Button className="bg-blue-600 hover:bg-blue-700">
+              <Button 
+                className="bg-blue-600 hover:bg-blue-700"
+                onClick={() => setAdminDialogOpen(true)}
+              >
                 <Plus className="mr-2 h-4 w-4" /> Akun Baru
               </Button>
             </div>
@@ -269,6 +281,91 @@ const Komunitas: React.FC = () => {
               </Button>
             </DialogFooter>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* New Admin Dialog */}
+      <Dialog open={adminDialogOpen} onOpenChange={setAdminDialogOpen}>
+        <DialogContent className="sm:max-w-md bg-white p-0 rounded-lg overflow-hidden">
+          <DialogHeader className="p-6 pb-2">
+            <DialogTitle className="text-xl font-semibold">Buat Admin</DialogTitle>
+          </DialogHeader>
+          
+          <form onSubmit={handleCreateAdmin} className="p-6 pt-4">
+            {/* Account Name */}
+            <div className="mb-4">
+              <Label htmlFor="accountName" className="block mb-1 font-medium">
+                Nama Akun<span className="text-red-500">*</span>
+              </Label>
+              <Input 
+                id="accountName" 
+                placeholder="Nama Akun" 
+                className="w-full"
+                required
+              />
+            </div>
+            
+            {/* Username */}
+            <div className="mb-4">
+              <Label htmlFor="adminUsername" className="block mb-1 font-medium">
+                Username<span className="text-red-500">*</span>
+              </Label>
+              <Input 
+                id="adminUsername" 
+                placeholder="Username" 
+                className="w-full"
+                required
+              />
+            </div>
+            
+            {/* Email */}
+            <div className="mb-4">
+              <Label htmlFor="adminEmail" className="block mb-1 font-medium">
+                Email<span className="text-red-500">*</span>
+              </Label>
+              <Input 
+                id="adminEmail"
+                type="email"
+                placeholder="Email" 
+                className="w-full"
+                required
+              />
+            </div>
+            
+            {/* Password */}
+            <div className="mb-6">
+              <Label htmlFor="adminPassword" className="block mb-1 font-medium">
+                Password
+              </Label>
+              <div className="relative">
+                <Input 
+                  id="adminPassword"
+                  type="password"
+                  placeholder="Password" 
+                  className="w-full pr-10"
+                />
+                <Eye className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex space-x-4">
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="flex-1 py-6"
+                onClick={() => setAdminDialogOpen(false)}
+              >
+                Batal
+              </Button>
+              <Button 
+                type="submit" 
+                className="flex-1 py-6 bg-blue-600 hover:bg-blue-700"
+              >
+                Buat Akun
+              </Button>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
