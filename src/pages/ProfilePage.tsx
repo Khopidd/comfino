@@ -31,12 +31,17 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
+    <div className="min-h-screen bg-[#F8FAFC] flex">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col pl-64">
+        <Header 
+          title="Profile" 
+          description="Perbarui foto dan detail pribadi Anda di sini" 
+        />
+        
         <main className="flex-1 p-8">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

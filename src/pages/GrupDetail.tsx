@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Sidebar } from '@/components/Layout/Sidebar';
+import { Header } from '@/components/Layout/Header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -87,6 +88,8 @@ const GrupDetail: React.FC = () => {
     navigate('/komunitas');
   };
 
+  const breadcrumbTitle = "Komunitas / Semua Grup / " + (currentGroup?.name || "");
+
   if (!currentGroup) {
     return (
       <div className="min-h-screen bg-slate-50 flex">
@@ -105,9 +108,10 @@ const GrupDetail: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black flex">
+    <div className="min-h-screen bg-[#F8FAFC] flex">
       <Sidebar />
       <div className="flex-1 flex flex-col pl-64">
+        <Header title="Komunitas" description={breadcrumbTitle} />
         <main className="flex-1 p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Group Info Card - Left Side */}

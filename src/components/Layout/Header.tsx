@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
     <header className="bg-white flex items-center justify-between px-8 py-4 border-b border-slate-100">
       <div>
         <h1 className="text-[#272742] text-2xl font-medium">{title}</h1>
-        <p className="text-slate-500 text-sm">{description}</p>
+        {description && <p className="text-slate-500 text-sm">{description}</p>}
       </div>
       
       <div className="flex items-center gap-6">
