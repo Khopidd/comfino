@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Sidebar } from '@/components/Layout/Sidebar';
-import { Header } from '@/components/Layout/Header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -93,15 +92,13 @@ const GrupDetail: React.FC = () => {
       <div className="min-h-screen bg-slate-50 flex">
         <Sidebar />
         <div className="flex-1 flex flex-col pl-64">
-          <Header 
-            title="Grup Tidak Ditemukan" 
-            description="Grup yang Anda cari tidak tersedia" 
-          />
-          <main className="flex-1 p-8">
+          <div className="p-8">
+            <h1 className="text-2xl font-medium">Grup Tidak Ditemukan</h1>
+            <p className="text-slate-500 mb-4">Grup yang Anda cari tidak tersedia</p>
             <Button onClick={() => navigate('/komunitas')}>
               Kembali ke Komunitas
             </Button>
-          </main>
+          </div>
         </div>
       </div>
     );
@@ -201,8 +198,8 @@ const GrupDetail: React.FC = () => {
                 <p className="text-slate-500 text-xs mt-1">Lihat semua riwayat keuangan acara</p>
               </div>
 
-              <div className="bg-slate-50 rounded-t-lg">
-                <div className="grid grid-cols-5 gap-2 text-left text-[#272742] font-medium py-4">
+              <div className="bg-slate-50 rounded-lg">
+                <div className="grid grid-cols-5 gap-2 text-left text-[#272742] font-medium p-4">
                   <div className="px-4">No</div>
                   <div className="px-4">Nama Acara</div>
                   <div className="px-4">Jumlah</div>

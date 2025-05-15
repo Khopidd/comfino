@@ -10,6 +10,7 @@ import Komunitas from "./pages/Komunitas";
 import GrupDetail from "./pages/GrupDetail";
 import SimpanUang from "./pages/SimpanUang";
 import ProfilePage from "./pages/ProfilePage";
+import ChangePassword from "./pages/ChangePassword";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import NotFound from "./pages/NotFound";
@@ -89,6 +90,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <ProfilePage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/change-password" 
+              element={
+                <ProtectedRoute>
+                  <ChangePassword />
                 </ProtectedRoute>
               } 
             />
