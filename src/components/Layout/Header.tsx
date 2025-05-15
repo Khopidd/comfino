@@ -1,15 +1,17 @@
 
 import React, { useState } from 'react';
 import { HeaderProps } from '@/types/dashboard';
-import { Bell, User, LogOut } from 'lucide-react';
+import { Bell, User, LogOut, X } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
+import { toast } from '@/components/ui/sonner';
 
 export const Header: React.FC<HeaderProps> = ({ title, description }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   
   const handleSignOut = () => {
@@ -25,8 +27,13 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
     setIsProfileOpen(false);
   };
 
+  const handleNotificationClick = () => {
+    setIsNotificationsOpen(false);
+    setIsModalOpen(true);
+  };
+
   return (
-    <header className="bg-white flex items-center justify-between px-8 py-4 border-b border-slate-100">
+    <header className="bg-white flex items-center justify-between px-8 py-4 border-b border-slate-100 sticky top-0 z-10">
       <div>
         <h1 className="text-[#272742] text-2xl font-medium">{title}</h1>
         {description && <p className="text-slate-500 text-sm">{description}</p>}
@@ -46,7 +53,11 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
             </div>
             <div className="divide-y divide-slate-100">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="p-4 flex gap-3 hover:bg-slate-50">
+                <div 
+                  key={i} 
+                  className="p-4 flex gap-3 hover:bg-slate-50 cursor-pointer"
+                  onClick={handleNotificationClick}
+                >
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <div className="text-blue-600">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,6 +120,96 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
           </PopoverContent>
         </Popover>
       </div>
+
+      {/* Notification Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="sm:max-w-md p-0 rounded-lg overflow-hidden">
+          <div className="flex flex-col">
+            {/* Modal header */}
+            <div className="p-5 flex justify-between items-center border-b border-gray-100">
+              <h3 className="text-lg font-medium">Divisi Mlbb</h3>
+              <button onClick={() => setIsModalOpen(false)}>
+                <X className="h-5 w-5 text-gray-400" />
+              </button>
+            </div>
+
+            {/* Modal content */}
+            <div className="p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">File Pendukung*</label>
+                <p className="text-xs text-gray-500 mb-2">Seperti: tanda terima, foto rencana acara, dll.</p>
+                
+                <div className="mb-4">
+                  <img 
+                    src="/lovable-uploads/b711622a-e4e1-4c68-b80f-efc5a5abae49.png" 
+                    alt="Tournament banner" 
+                    className="w-full rounded-md mb-2 h-auto object-cover"
+                  />
+                  
+                  <div className="flex gap-2 mt-2">
+                    <div className="w-24 h-12 rounded overflow-hidden">
+                      <img 
+                        src="/lovable-uploads/b711622a-e4e1-4c68-b80f-efc5a5abae49.png" 
+                        alt="Mobile legends logo" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="w-24 h-12 rounded overflow-hidden">
+                      <img 
+                        src="/lovable-uploads/b711622a-e4e1-4c68-b80f-efc5a5abae49.png" 
+                        alt="Tournament details" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Nama Acara*</label>
+                <input 
+                  type="text" 
+                  readOnly
+                  value="Tournament Mlbb" 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Jumlah* <span className="text-xs text-gray-500">IDR</span></label>
+                <input 
+                  type="text" 
+                  readOnly
+                  value="2.450.000" 
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-700"
+                />
+              </div>
+            </div>
+            
+            {/* Modal footer */}
+            <div className="p-4 flex gap-3">
+              <button 
+                className="flex-1 py-2.5 border border-gray-300 rounded-md text-gray-700 font-medium"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Tolak
+              </button>
+              <button 
+                className="flex-1 py-2.5 bg-blue-500 text-white rounded-md font-medium"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Disetujui
+              </button>
+            </div>
+            
+            <div className="p-2 text-center">
+              <button className="text-blue-500 text-sm font-medium">
+                Lihat Detail
+              </button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 };
