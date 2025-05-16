@@ -2,18 +2,78 @@
 import React from 'react';
 import { Sidebar } from '@/components/Layout/Sidebar';
 import { Header } from '@/components/Layout/Header';
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Download, Calendar } from 'lucide-react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from "@/components/ui/table";
 
 const MemberDashboard: React.FC = () => {
   const navigate = useNavigate();
 
+  const transactions = [
+    {
+      id: 1,
+      name: "Musyawarah Besar",
+      amount: "- IDR2.450.000",
+      date: "27, Jan 2025",
+      status: "success"
+    },
+    {
+      id: 2,
+      name: "Makrab",
+      amount: "- IDR280.000",
+      date: "27, Jan 2025",
+      status: "pending"
+    },
+    {
+      id: 3,
+      name: "Sewa Barang",
+      amount: "- IDR1.525.000",
+      date: "27, Jan 2025",
+      status: "canceled"
+    },
+    {
+      id: 4,
+      name: "Buat PDH Hima",
+      amount: "- IDR750.000",
+      date: "27, Jan 2025",
+      status: "success"
+    }
+  ];
+
+  const renderStatusBadge = (status: string) => {
+    switch(status) {
+      case 'success':
+        return <span className="px-3 py-1 bg-teal-100 text-teal-500 rounded-full text-sm">Success</span>;
+      case 'pending':
+        return <span className="px-3 py-1 bg-amber-100 text-amber-500 rounded-full text-sm">Pending</span>;
+      case 'canceled':
+        return <span className="px-3 py-1 bg-red-100 text-red-500 rounded-full text-sm">Canceled</span>;
+      default:
+        return <span className="px-3 py-1 bg-gray-100 text-gray-500 rounded-full text-sm">{status}</span>;
+    }
+  };
+
+  // Current month calendar days
+  const daysOfWeek = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+  const currentDate = new Date();
+  
+  // Generate calendar dates (simplified for the UI)
+  const calendarDates = Array.from({ length: 35 }, (_, i) => {
+    return i + 1;
+  });
+
   return (
     <div className="flex min-h-screen bg-[#F8FAFC]">
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar userRole="member" />
 
       {/* Main content */}
       <div className="flex-1 ml-64">
@@ -58,139 +118,148 @@ const MemberDashboard: React.FC = () => {
 
             {/* Financial Records Table */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <table className="w-full text-left">
-                <thead className="bg-slate-50 text-gray-600 text-sm">
-                  <tr>
-                    <th className="py-4 px-6">No</th>
-                    <th className="py-4 px-6">Nama Acara</th>
-                    <th className="py-4 px-6">Jumlah</th>
-                    <th className="py-4 px-6">Tanggal</th>
-                    <th className="py-4 px-6">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  <tr>
-                    <td className="py-4 px-6 text-gray-500">1.</td>
-                    <td className="py-4 px-6 font-medium">Musyawarah Besar</td>
-                    <td className="py-4 px-6 text-red-500">- IDR2.450.000</td>
-                    <td className="py-4 px-6 text-gray-500">27, Jan 2025</td>
-                    <td className="py-4 px-6">
-                      <span className="px-3 py-1 bg-teal-100 text-teal-500 rounded-full text-sm">Success</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-6 text-gray-500">2.</td>
-                    <td className="py-4 px-6 font-medium">Makrab</td>
-                    <td className="py-4 px-6 text-red-500">- IDR280.000</td>
-                    <td className="py-4 px-6 text-gray-500">27, Jan 2025</td>
-                    <td className="py-4 px-6">
-                      <span className="px-3 py-1 bg-amber-100 text-amber-500 rounded-full text-sm">Pending</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-6 text-gray-500">3.</td>
-                    <td className="py-4 px-6 font-medium">Sewa Barang</td>
-                    <td className="py-4 px-6 text-red-500">- IDR1.525.000</td>
-                    <td className="py-4 px-6 text-gray-500">27, Jan 2025</td>
-                    <td className="py-4 px-6">
-                      <span className="px-3 py-1 bg-red-100 text-red-500 rounded-full text-sm">Canceled</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-4 px-6 text-gray-500">4.</td>
-                    <td className="py-4 px-6 font-medium">Buat PDH Hima</td>
-                    <td className="py-4 px-6 text-red-500">- IDR750.000</td>
-                    <td className="py-4 px-6 text-gray-500">27, Jan 2025</td>
-                    <td className="py-4 px-6">
-                      <span className="px-3 py-1 bg-teal-100 text-teal-500 rounded-full text-sm">Success</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <Table>
+                <TableHeader className="bg-slate-50">
+                  <TableRow>
+                    <TableHead>No</TableHead>
+                    <TableHead>Nama Acara</TableHead>
+                    <TableHead>Jumlah</TableHead>
+                    <TableHead>Tanggal</TableHead>
+                    <TableHead>Status</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {transactions.map((transaction) => (
+                    <TableRow key={transaction.id}>
+                      <TableCell className="text-gray-500">{transaction.id}.</TableCell>
+                      <TableCell className="font-medium">{transaction.name}</TableCell>
+                      <TableCell className="text-red-500">{transaction.amount}</TableCell>
+                      <TableCell className="text-gray-500">{transaction.date}</TableCell>
+                      <TableCell>{renderStatusBadge(transaction.status)}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
           </div>
 
           {/* Analytics Section */}
-          <div className="bg-white rounded-lg p-6 shadow-sm mb-8">
-            <div className="flex justify-between mb-6">
-              <div>
+          <div className="mb-8">
+            <div className="flex items-start">
+              <div className="flex-1">
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">Analitik</h2>
-                <div className="text-sm text-gray-500">Total Pendapatan</div>
-                <div className="text-2xl font-bold flex items-center gap-2">
-                  IDR4,550,000
-                  <span className="text-green-500 text-sm">+2.4%</span>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" className="flex items-center gap-1">
-                  <Download className="h-4 w-4" />
-                  Unduh Laporan
-                </Button>
-                <select className="rounded-md border border-gray-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  <option>Hari Ini</option>
-                  <option>Minggu Ini</option>
-                  <option>Bulan Ini</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Chart placeholder */}
-            <div className="h-64 bg-gray-50 rounded-md flex items-center justify-center">
-              <p className="text-gray-400">Chart visualization would go here</p>
-            </div>
-
-            <div className="flex mt-4 gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-                <span className="text-sm text-gray-600">Pendapatan</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-pink-400"></div>
-                <span className="text-sm text-gray-600">Pengeluaran</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Calendar Section */}
-          <div className="bg-white rounded-lg p-6 shadow-sm">
-            <div className="flex justify-between items-center mb-6">
-              <div className="flex items-center gap-2">
-                <h2 className="text-xl font-semibold text-gray-800">Januari 2025</h2>
-                <div className="flex gap-1">
-                  <button className="p-1 rounded border border-gray-200">
-                    <ArrowLeft className="h-4 w-4 text-gray-500" />
-                  </button>
-                  <button className="p-1 rounded border border-gray-200">
-                    <ArrowRight className="h-4 w-4 text-gray-500" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Calendar grid */}
-            <div className="grid grid-cols-7 text-center gap-2">
-              <div className="text-sm font-medium text-gray-500">Min</div>
-              <div className="text-sm font-medium text-gray-500">Sen</div>
-              <div className="text-sm font-medium text-gray-500">Sel</div>
-              <div className="text-sm font-medium text-gray-500">Rab</div>
-              <div className="text-sm font-medium text-gray-500">Kam</div>
-              <div className="text-sm font-medium text-gray-500">Jum</div>
-              <div className="text-sm font-medium text-gray-500">Sab</div>
-
-              {[...Array(31)].map((_, i) => {
-                if (i === 22) {
-                  return (
-                    <div key={i} className="aspect-square flex items-center justify-center rounded-full bg-blue-600 text-white">
-                      23
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <div className="mb-6">
+                    <div className="text-sm text-gray-500">Total Pendapatan</div>
+                    <div className="text-2xl font-bold flex items-center gap-2">
+                      IDR4,550,000
+                      <span className="text-green-500 text-sm">+2.4%</span>
                     </div>
-                  );
-                }
-                return (
-                  <div key={i} className="aspect-square flex items-center justify-center">
-                    {i + 1}
                   </div>
-                );
-              })}
+
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex gap-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                        <span className="text-sm text-gray-600">Pendapatan</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-pink-400"></div>
+                        <span className="text-sm text-gray-600">Pengeluaran</span>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" className="flex items-center gap-1">
+                        <Download className="h-4 w-4" />
+                        Unduh Laporan
+                      </Button>
+                      <select className="rounded-md border border-gray-200 px-4 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>Hari Ini</option>
+                        <option>Minggu Ini</option>
+                        <option>Bulan Ini</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Chart placeholder */}
+                  <div className="h-64 bg-gray-50 rounded-md flex flex-col items-center justify-center relative">
+                    {/* Line chart visualization - simplified for this example */}
+                    <div className="w-full h-full relative">
+                      <div className="absolute left-10 bottom-0 text-xs text-gray-500">Jun</div>
+                      <div className="absolute left-[20%] bottom-0 text-xs text-gray-500">Jul</div>
+                      <div className="absolute left-[35%] bottom-0 text-xs text-gray-500">Aug</div>
+                      <div className="absolute left-[50%] bottom-0 text-xs text-gray-500">Sep</div>
+                      <div className="absolute left-[65%] bottom-0 text-xs text-gray-500">Oct</div>
+                      <div className="absolute left-[80%] bottom-0 text-xs text-gray-500">Nov</div>
+                      <div className="absolute right-10 bottom-0 text-xs text-gray-500">Dec</div>
+                      
+                      <div className="absolute left-0 top-3 text-xs text-gray-500">1M</div>
+                      <div className="absolute left-0 top-[25%] text-xs text-gray-500">500K</div>
+                      <div className="absolute left-0 top-[45%] text-xs text-gray-500">300K</div>
+                      <div className="absolute left-0 top-[65%] text-xs text-gray-500">200K</div>
+                      <div className="absolute left-0 bottom-5 text-xs text-gray-500">100K</div>
+                      
+                      {/* The actual chart line would be implemented with a library like recharts */}
+                      <svg className="w-full h-[80%] mt-5" viewBox="0 0 1000 200">
+                        <path 
+                          d="M50,100 C100,80 150,120 200,70 S300,140 350,90 S450,150 500,50 S600,100 650,70 S750,140 800,90 S900,90 950,110" 
+                          fill="none" 
+                          stroke="#3B82F6" 
+                          strokeWidth="3"
+                        />
+                      </svg>
+                      
+                      {/* Sample data points */}
+                      <div className="absolute left-[30%] top-[35%] bg-gray-700 text-white p-2 rounded text-xs">
+                        IDR 520,000<br/>Jul, 15
+                      </div>
+                      <div className="absolute left-[55%] top-[55%] bg-gray-700 text-white p-2 rounded text-xs">
+                        - IDR250,000<br/>Sep, 04
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Calendar */}
+              <div className="ml-8 w-80">
+                <h2 className="text-xl font-semibold text-gray-800 mb-4">Januari 2025</h2>
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center gap-2">
+                      <button className="p-1 rounded border border-gray-200">
+                        <ArrowLeft className="h-4 w-4 text-gray-500" />
+                      </button>
+                      <button className="p-1 rounded border border-gray-200">
+                        <ArrowRight className="h-4 w-4 text-gray-500" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Calendar grid */}
+                  <div className="grid grid-cols-7 text-center gap-2">
+                    {daysOfWeek.map((day, index) => (
+                      <div key={index} className="text-sm font-medium text-gray-500">{day}</div>
+                    ))}
+
+                    {calendarDates.map((date, index) => {
+                      if (date === 23) {
+                        return (
+                          <div key={index} className="aspect-square flex items-center justify-center rounded-full bg-blue-600 text-white">
+                            {date}
+                          </div>
+                        );
+                      }
+                      return (
+                        <div key={index} className="aspect-square flex items-center justify-center">
+                          {date <= 31 ? date : ''}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </main>

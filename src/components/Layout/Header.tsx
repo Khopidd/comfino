@@ -8,7 +8,11 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useNavigate } from 'react-router-dom';
 import { toast } from '@/components/ui/sonner';
 
-export const Header: React.FC<HeaderProps> = ({ title, description }) => {
+interface ExtendedHeaderProps extends HeaderProps {
+  userRole?: string;
+}
+
+export const Header: React.FC<ExtendedHeaderProps> = ({ title, description, userRole }) => {
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +21,7 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
   const handleSignOut = () => {
     localStorage.removeItem("isAuthenticated");
     localStorage.removeItem("username");
+    localStorage.removeItem("userRole");
     toast.success("Signed out successfully");
     navigate("/signin");
     setIsProfileOpen(false);
@@ -36,6 +41,10 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
     setIsModalOpen(false);
     navigate("/detail-catatan");
   };
+
+  const username = localStorage.getItem("username") || "User";
+  const role = localStorage.getItem("userRole") || "admin";
+  const displayName = username === "divisimlbb" ? "Divisi Mlbb" : "Mochamad Khopid";
 
   return (
     <header className="bg-white flex items-center justify-between px-8 py-4 border-b border-slate-100 sticky top-0 z-10">
@@ -98,13 +107,13 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
                 className="object-cover"
                 alt="User Avatar" 
               />
-              <AvatarFallback>MK</AvatarFallback>
+              <AvatarFallback>{username.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
           </PopoverTrigger>
           <PopoverContent className="w-60 p-0 rounded-xl mr-16">
             <div className="p-5 border-b border-slate-100">
-              <h2 className="text-xl font-semibold text-[#272742]">Mochamad Khopid</h2>
-              <p className="text-gray-500">Admin</p>
+              <h2 className="text-xl font-semibold text-[#272742]">{displayName}</h2>
+              <p className="text-gray-500">{role === "member" ? "Member" : "Admin"}</p>
             </div>
             <div className="p-1">
               <button 
@@ -146,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
                 
                 <div className="mb-4">
                   <img 
-                    src="/lovable-uploads/b711622a-e4e1-4c68-b80f-efc5a5abae49.png" 
+                    src="/lovable-uploads/d7e674f0-1561-4858-b8cc-b9433dcf1ad9.png" 
                     alt="Tournament banner" 
                     className="w-full rounded-md mb-2 h-auto object-cover"
                   />
@@ -154,14 +163,14 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
                   <div className="flex gap-2 mt-2">
                     <div className="w-24 h-12 rounded overflow-hidden">
                       <img 
-                        src="/lovable-uploads/b711622a-e4e1-4c68-b80f-efc5a5abae49.png" 
+                        src="/lovable-uploads/d7e674f0-1561-4858-b8cc-b9433dcf1ad9.png" 
                         alt="Mobile legends logo" 
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="w-24 h-12 rounded overflow-hidden">
                       <img 
-                        src="/lovable-uploads/b711622a-e4e1-4c68-b80f-efc5a5abae49.png" 
+                        src="/lovable-uploads/d7e674f0-1561-4858-b8cc-b9433dcf1ad9.png" 
                         alt="Tournament details" 
                         className="w-full h-full object-cover"
                       />
