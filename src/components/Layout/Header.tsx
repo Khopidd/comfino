@@ -32,6 +32,11 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
     setIsModalOpen(true);
   };
 
+  const navigateToDetailCatatan = () => {
+    setIsModalOpen(false);
+    navigate("/detail-catatan");
+  };
+
   return (
     <header className="bg-white flex items-center justify-between px-8 py-4 border-b border-slate-100 sticky top-0 z-10">
       <div>
@@ -203,7 +208,10 @@ export const Header: React.FC<HeaderProps> = ({ title, description }) => {
             </div>
             
             <div className="p-2 text-center">
-              <button className="text-blue-500 text-sm font-medium">
+              <button 
+                className="text-blue-500 text-sm font-medium"
+                onClick={navigateToDetailCatatan}
+              >
                 Lihat Detail
               </button>
             </div>

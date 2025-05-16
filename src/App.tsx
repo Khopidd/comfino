@@ -13,6 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ChangePassword from "./pages/ChangePassword";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
+import DetailCatatan from "./pages/DetailCatatan";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -74,6 +75,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <GrupDetail />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/detail-catatan" 
+              element={
+                <ProtectedRoute>
+                  <DetailCatatan />
                 </ProtectedRoute>
               } 
             />
