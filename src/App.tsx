@@ -14,16 +14,28 @@ import ChangePassword from "./pages/ChangePassword";
 import SignIn from "./pages/SignIn";
 import ForgotPassword from "./pages/ForgotPassword";
 import DetailCatatan from "./pages/DetailCatatan";
+import MemberDashboard from "./pages/MemberDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
 // Protected route component
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode, requiredRole?: string }) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const userRole = localStorage.getItem("userRole");
   
   if (!isAuthenticated) {
     return <Navigate to="/signin" replace />;
+  }
+  
+  // If a specific role is required and user doesn't have it
+  if (requiredRole && userRole !== requiredRole) {
+    // Redirect member to member dashboard or admin to admin dashboard
+    if (userRole === 'member') {
+      return <Navigate to="/member-dashboard" replace />;
+    } else {
+      return <Navigate to="/" replace />;
+    }
   }
   
   return <>{children}</>;
@@ -57,7 +69,7 @@ const App = () => {
             <Route 
               path="/" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requiredRole="admin">
                   <Index />
                 </ProtectedRoute>
               } 
@@ -65,7 +77,7 @@ const App = () => {
             <Route 
               path="/komunitas" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requiredRole="admin">
                   <Komunitas />
                 </ProtectedRoute>
               } 
@@ -73,7 +85,7 @@ const App = () => {
             <Route 
               path="/komunitas/:groupId" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requiredRole="admin">
                   <GrupDetail />
                 </ProtectedRoute>
               } 
@@ -89,7 +101,7 @@ const App = () => {
             <Route 
               path="/simpan-uang" 
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requiredRole="admin">
                   <SimpanUang />
                 </ProtectedRoute>
               } 
@@ -109,6 +121,14 @@ const App = () => {
                   <ChangePassword />
                 </ProtectedRoute>
               } 
+            />
+            <Route
+              path="/member-dashboard"
+              element={
+                <ProtectedRoute requiredRole="member">
+                  <MemberDashboard />
+                </ProtectedRoute>
+              }
             />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

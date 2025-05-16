@@ -15,14 +15,25 @@ const SignIn = () => {
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Simple authentication check
+    // Check authentication for admin
     if (username === "Mochamad Khopid" && password === "Khopidd123") {
       // Store auth state
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("username", username);
+      localStorage.setItem("userRole", "admin");
       toast.success("Login successful!");
       navigate("/");
-    } else {
+    } 
+    // Check authentication for division member
+    else if (username === "divisimlbb" && password === "divisimlbb") {
+      // Store auth state
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("username", username);
+      localStorage.setItem("userRole", "member");
+      toast.success("Login successful!");
+      navigate("/member-dashboard");
+    }
+    else {
       toast.error("Invalid username or password.");
     }
   };
