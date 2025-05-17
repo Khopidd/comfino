@@ -19,7 +19,7 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Protected route component
+// Protected route component with role-based redirection
 const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode, requiredRole?: string }) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   const userRole = localStorage.getItem("userRole");
@@ -39,6 +39,22 @@ const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode,
   }
   
   return <>{children}</>;
+};
+
+// Root redirect component to route users based on role
+const RootRedirect = () => {
+  const userRole = localStorage.getItem("userRole");
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/signin" replace />;
+  }
+  
+  if (userRole === 'member') {
+    return <Navigate to="/member-dashboard" replace />;
+  } else {
+    return <Navigate to="/" replace />;
+  }
 };
 
 const App = () => {
@@ -64,19 +80,14 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Root path will redirect based on role */}
+            <Route path="/" element={<ProtectedRoute requiredRole="admin"><Index /></ProtectedRoute>} />
+            
             {/* Public routes */}
             <Route path="/signin" element={<SignIn />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             
             {/* Admin routes */}
-            <Route 
-              path="/" 
-              element={
-                <ProtectedRoute requiredRole="admin">
-                  <Index />
-                </ProtectedRoute>
-              } 
-            />
             <Route 
               path="/komunitas" 
               element={

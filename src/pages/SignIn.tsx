@@ -22,14 +22,14 @@ const SignIn: React.FC = () => {
     // Mock authentication - in a real app this would be an API call
     setTimeout(() => {
       if (username === 'divisimlbb' && password === 'divisimlbb') {
-        // Set authentication state
+        // Set authentication state for member
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("username", username);
         localStorage.setItem("userRole", "member");
         
         toast.success("Welcome back, Divisi MLBB!");
         navigate("/member-dashboard");
-      } else if (username === 'admin' && password === 'password') {
+      } else if (username === 'admin' && password === 'admin') {
         // Admin authentication
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("username", username);
@@ -62,6 +62,10 @@ const SignIn: React.FC = () => {
           <div className="mb-8">
             <h1 className="text-2xl font-semibold text-gray-800 mb-2">Log in to your account</h1>
             <p className="text-gray-500">Welcome back! Please enter your details.</p>
+            <div className="mt-4 p-3 bg-blue-50 text-blue-700 rounded-md text-sm">
+              <p><strong>Admin Login:</strong> username: admin | password: admin</p>
+              <p><strong>Member Login:</strong> username: divisimlbb | password: divisimlbb</p>
+            </div>
           </div>
           
           <form onSubmit={handleSignIn} className="space-y-6">
