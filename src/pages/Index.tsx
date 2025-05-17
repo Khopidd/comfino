@@ -11,13 +11,14 @@ const Index: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 flex">
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar userRole="admin" />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col pl-64">
         <Header
           title="Dashboard"
           description="Informasi terperinci tentang keuangan komunitas Anda"
+          userRole="admin"
         />
 
         <main className="flex-1 p-8">

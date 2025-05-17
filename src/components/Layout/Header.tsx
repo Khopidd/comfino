@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { HeaderProps } from '@/types/dashboard';
 import { Bell, User, LogOut, X } from 'lucide-react';
@@ -43,7 +42,7 @@ export const Header: React.FC<ExtendedHeaderProps> = ({ title, description, user
   };
 
   const username = localStorage.getItem("username") || "User";
-  const role = localStorage.getItem("userRole") || "admin";
+  const role = userRole || localStorage.getItem("userRole") || "admin";
   const displayName = username === "divisimlbb" ? "Divisi Mlbb" : "Mochamad Khopid";
 
   return (

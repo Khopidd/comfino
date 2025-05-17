@@ -10,6 +10,7 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ userRole }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const currentRole = userRole || localStorage.getItem("userRole") || "";
 
   return (
     <nav className="bg-white w-64 flex flex-col h-screen pt-8 pb-8 shadow-sm fixed left-0 top-0 z-10">
@@ -25,23 +26,32 @@ export const Sidebar: React.FC<SidebarProps> = ({ userRole }) => {
       <div className="border-b border-gray-100 my-6" />
       
       <div className="flex flex-col space-y-2 px-6">
-        <div 
-          className={`flex items-center gap-3 py-3 px-4 ${location.pathname === '/member-dashboard' || location.pathname === '/' ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'} transition-colors rounded-lg font-medium cursor-pointer`}
-          onClick={() => userRole === 'member' ? navigate('/member-dashboard') : navigate('/')}
-        >
-          <LayoutGrid className="h-5 w-5" />
-          Dashboard
-        </div>
-        
-        {/* Only show Komunitas menu for admin users */}
-        {userRole !== 'member' && (
+        {currentRole === 'member' ? (
           <div 
-            className={`flex items-center gap-3 py-3 px-4 ${location.pathname === '/komunitas' ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'} transition-colors rounded-lg font-medium cursor-pointer`}
-            onClick={() => navigate('/komunitas')}
+            className={`flex items-center gap-3 py-3 px-4 ${location.pathname === '/member-dashboard' ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'} transition-colors rounded-lg font-medium cursor-pointer`}
+            onClick={() => navigate('/member-dashboard')}
           >
-            <Users className="h-5 w-5" />
-            Komunitas
+            <LayoutGrid className="h-5 w-5" />
+            Dashboard
           </div>
+        ) : (
+          <>
+            <div 
+              className={`flex items-center gap-3 py-3 px-4 ${location.pathname === '/' ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'} transition-colors rounded-lg font-medium cursor-pointer`}
+              onClick={() => navigate('/')}
+            >
+              <LayoutGrid className="h-5 w-5" />
+              Dashboard
+            </div>
+            
+            <div 
+              className={`flex items-center gap-3 py-3 px-4 ${location.pathname === '/komunitas' ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'} transition-colors rounded-lg font-medium cursor-pointer`}
+              onClick={() => navigate('/komunitas')}
+            >
+              <Users className="h-5 w-5" />
+              Komunitas
+            </div>
+          </>
         )}
       </div>
     </nav>

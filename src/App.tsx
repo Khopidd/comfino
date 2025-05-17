@@ -33,7 +33,7 @@ const ProtectedRoute = ({ children, requiredRole }: { children: React.ReactNode,
     // Redirect member to member dashboard or admin to admin dashboard
     if (userRole === 'member') {
       return <Navigate to="/member-dashboard" replace />;
-    } else {
+    } else if (userRole === 'admin') {
       return <Navigate to="/" replace />;
     }
   }
@@ -64,8 +64,11 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Public routes */}
             <Route path="/signin" element={<SignIn />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            
+            {/* Admin routes */}
             <Route 
               path="/" 
               element={
@@ -91,18 +94,30 @@ const App = () => {
               } 
             />
             <Route 
-              path="/detail-catatan" 
-              element={
-                <ProtectedRoute>
-                  <DetailCatatan />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
               path="/simpan-uang" 
               element={
                 <ProtectedRoute requiredRole="admin">
                   <SimpanUang />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* Member routes */}
+            <Route
+              path="/member-dashboard"
+              element={
+                <ProtectedRoute requiredRole="member">
+                  <MemberDashboard />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Shared routes (accessible by both admin and member) */}
+            <Route 
+              path="/detail-catatan" 
+              element={
+                <ProtectedRoute>
+                  <DetailCatatan />
                 </ProtectedRoute>
               } 
             />
@@ -122,15 +137,8 @@ const App = () => {
                 </ProtectedRoute>
               } 
             />
-            <Route
-              path="/member-dashboard"
-              element={
-                <ProtectedRoute requiredRole="member">
-                  <MemberDashboard />
-                </ProtectedRoute>
-              }
-            />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+
+            {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
