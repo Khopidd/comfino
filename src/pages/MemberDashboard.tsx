@@ -3,12 +3,13 @@ import React from 'react';
 import { Sidebar } from '@/components/Layout/Sidebar';
 import { Header } from '@/components/Layout/Header';
 import { Button } from '@/components/ui/button';
-import { Download, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Download, ChevronDown } from 'lucide-react';
+import { AnalyticsChart } from '@/components/Dashboard/AnalyticsChart'; 
+import { Calendar } from '@/components/Dashboard/Calendar';
 import { useNavigate } from 'react-router-dom';
 
 const MemberDashboard: React.FC = () => {
   const navigate = useNavigate();
-  const currentMonth = 'Januari 2025';
 
   // Transactions data
   const transactions = [
@@ -41,13 +42,6 @@ const MemberDashboard: React.FC = () => {
       status: "success"
     }
   ];
-
-  // Calendar data
-  const daysOfWeek = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
-  const days = Array.from({ length: 35 }, (_, i) => {
-    const day = i + 1;
-    return { day: day <= 31 ? day : null };
-  });
 
   // Render status badge
   const renderStatusBadge = (status: string) => {
@@ -137,139 +131,53 @@ const MemberDashboard: React.FC = () => {
           </div>
 
           {/* Analytics and Calendar Section */}
-          <div className="flex space-x-8">
-            {/* Analytics */}
-            <div className="flex-1">
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">Analitik</h2>
-
-              <div className="bg-white p-6 rounded-xl shadow">
-                <div className="mb-6">
-                  <p className="text-gray-500">Total Pendapatan</p>
-                  <div className="flex items-center mt-1">
-                    <p className="text-3xl font-bold text-gray-800">IDR4,550,000</p>
-                    <span className="ml-2 text-sm text-green-500">+2.4%</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center mb-6">
-                  <div className="flex space-x-5">
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 rounded-full bg-blue-600 mr-2"></div>
-                      <span className="text-gray-600">Pendapatan</span>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+            {/* Analytics Chart - using the same component as admin dashboard */}
+            <div className="lg:col-span-2">
+              <div className="bg-white rounded-2xl shadow-sm p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h2 className="text-2xl text-[#272742] font-medium">Analitik</h2>
+                    <div className="mt-4">
+                      <p className="text-gray-500">Total Pengeluaran</p>
+                      <div className="flex items-center gap-2">
+                        <p className="text-3xl font-bold text-[#272742]">IDR4,550,000</p>
+                        <span className="text-sm text-green-500">+2.4%</span>
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <div className="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
-                      <span className="text-gray-600">Pengeluaran</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-3">
-                    <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg">
-                      <Download className="h-4 w-4" />
-                      <span>Unduh Laporan</span>
-                    </button>
-                    <div className="flex items-center gap-2 border border-gray-200 px-4 py-2 rounded-lg">
-                      <span>Hari Ini</span>
-                      <ChevronDown className="h-4 w-4" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Chart */}
-                <div className="h-64 relative">
-                  {/* Y-axis labels */}
-                  <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-gray-500">
-                    <span>1M</span>
-                    <span>500K</span>
-                    <span>300K</span>
-                    <span>200K</span>
-                    <span>100K</span>
                   </div>
                   
-                  {/* Chart area */}
-                  <div className="pl-10 h-full relative">
-                    <svg className="w-full h-full" viewBox="0 0 1000 200">
-                      {/* Blue line (revenue) */}
-                      <path 
-                        d="M0,100 C50,80 100,120 150,70 S250,140 300,90 S400,150 450,50 S550,100 600,70 S700,140 750,90 S850,90 900,110"
-                        fill="none"
-                        stroke="#3B82F6"
-                        strokeWidth="3"
-                      />
-                      {/* Area under blue line */}
-                      <path 
-                        d="M0,100 C50,80 100,120 150,70 S250,140 300,90 S400,150 450,50 S550,100 600,70 S700,140 750,90 S850,90 900,110 L900,200 L0,200 Z"
-                        fill="url(#blueGradient)"
-                        fillOpacity="0.1"
-                      />
-                      <defs>
-                        <linearGradient id="blueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.3" />
-                          <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
-                    
-                    {/* X-axis labels */}
-                    <div className="flex justify-between text-xs text-gray-500 absolute bottom-0 left-0 right-0">
-                      <span>Jun</span>
-                      <span>Jul</span>
-                      <span>Aug</span>
-                      <span>Sep</span>
-                      <span>Oct</span>
-                      <span>Nov</span>
-                      <span>Dec</span>
-                    </div>
-
-                    {/* Data points */}
-                    <div className="absolute left-[30%] top-[35%] bg-gray-700 text-white p-2 rounded text-xs">
-                      IDR 520,000<br/>Jul, 15
-                    </div>
-                    <div className="absolute left-[55%] top-[55%] bg-gray-700 text-white p-2 rounded text-xs">
-                      - IDR250,000<br/>Sep, 04
+                  <div className="flex items-center gap-3">
+                    <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-3 rounded-xl">
+                      <Download className="h-5 w-5" />
+                      <span className="font-semibold">Unduh Laporan</span>
+                    </button>
+                    <div className="flex items-center border border-slate-200 rounded-xl px-6 py-3 text-slate-600">
+                      <span>Hari Ini</span>
+                      <ChevronDown className="h-4 w-4 ml-3" />
                     </div>
                   </div>
                 </div>
+
+                <div className="mt-6 flex items-center gap-6 mb-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-blue-600"></div>
+                    <span className="text-gray-600">Pendapatan</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-pink-500"></div>
+                    <span className="text-gray-600">Pengeluaran</span>
+                  </div>
+                </div>
+
+                {/* Use the same AnalyticsChart component as in the admin dashboard */}
+                <AnalyticsChart />
               </div>
             </div>
 
-            {/* Calendar */}
-            <div className="w-80">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-semibold text-gray-800">{currentMonth}</h2>
-                <div className="flex space-x-2">
-                  <button className="p-1 rounded border border-gray-200">
-                    <ChevronLeft className="h-4 w-4 text-gray-500" />
-                  </button>
-                  <button className="p-1 rounded border border-gray-200">
-                    <ChevronRight className="h-4 w-4 text-gray-500" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="bg-white p-6 rounded-xl shadow">
-                {/* Calendar grid */}
-                <div className="grid grid-cols-7 gap-2">
-                  {/* Days of week */}
-                  {daysOfWeek.map(day => (
-                    <div key={day} className="text-center text-sm font-medium text-gray-600 mb-4">{day}</div>
-                  ))}
-                  
-                  {/* Days */}
-                  {days.map(({ day }, index) => (
-                    <div 
-                      key={index} 
-                      className={`
-                        h-8 w-8 flex items-center justify-center text-sm
-                        ${day === 23 ? 'bg-blue-600 text-white rounded-full' : ''}
-                        ${!day ? 'invisible' : ''}
-                      `}
-                    >
-                      {day}
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {/* Calendar - using the same component as admin dashboard */}
+            <div>
+              <Calendar />
             </div>
           </div>
         </main>
